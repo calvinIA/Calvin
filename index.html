@@ -1,73 +1,1148 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calvin — Assistant AI</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2b2b45);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-    }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
-      animation: fadeInDown 1.2s ease;
-    }
-    p {
-      font-size: 1.3em;
-      max-width: 600px;
-      margin: 0 auto 2em;
-      animation: fadeInUp 1.5s ease;
-    }
-    .btn {
-      background-color: #4c5fff;
-      color: white;
-      padding: 0.8em 1.6em;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      animation: fadeInUp 2s ease;
-    }
-    .btn:hover {
-      background-color: #3c4edd;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Maturity Model — Clinical Trial Supplies</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  @font-face {
+    font-family: 'Cera Pro';
+    src: local('Cera Pro Medium'), local('CeraPro-Medium');
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Cera Pro';
+    src: local('Cera Pro Light'), local('CeraPro-Light');
+    font-weight: 300;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Cera Pro';
+    src: local('Cera Pro Bold'), local('CeraPro-Bold');
+    font-weight: 700;
+    font-style: normal;
+  }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    footer {
-      margin-top: 4em;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-  </style>
+  :root {
+    /* Tenthpin Colors */
+    --cosmos: #142644;
+    --cosmos-deep: #0c1a30;
+    --cosmos-60: #727D8F;
+    --cosmos-50: #8A93A2;
+    --cosmos-40: #A1A8B4;
+    --cosmos-30: #B9BEC7;
+    --cosmos-20: #D0D4DA;
+    --cosmos-10: #E8E9EC;
+    --sky: #8BC3E0;
+    --lime: #CDE85C;
+    --mint: #78FAAA;
+    --flame: #F55069;
+    --glow: #FF8755;
+    --graphite: #A0AAB4;
+    --dusk: #7D5FEB;
+    --moss: #00AF87;
+    --polar: #1400FF;
+    --white: #FFFFFF;
+    --lt2: #E7E6E6;
+
+    /* Functional mappings */
+    --bg: var(--cosmos-deep);
+    --panel: rgba(20, 38, 68, 0.92);
+    --border: rgba(139, 195, 224, 0.18);
+    --text: var(--cosmos-10);
+    --text-dim: var(--cosmos-50);
+    --accent: var(--sky);
+    --success: var(--lime);
+    --danger: var(--flame);
+
+    /* Quadrant colors */
+    --q-bl: var(--flame);
+    --q-br: var(--glow);
+    --q-tl: var(--dusk);
+    --q-tr: var(--lime);
+  }
+
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: 'Cera Pro', 'DM Sans', -apple-system, sans-serif;
+    font-weight: 300;
+    color: var(--text);
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: 340px 1fr 260px;
+    grid-template-rows: 56px 1fr;
+    gap: 0;
+    height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    background: linear-gradient(90deg, var(--cosmos), rgba(20,38,68,0.95));
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    z-index: 10;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .tp-logo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .tp-logo .pins {
+    display: flex;
+    gap: 2px;
+  }
+  .tp-logo .pin {
+    width: 4px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--sky);
+    opacity: 0.7;
+  }
+  .tp-logo .pin:nth-child(2) { height: 11px; background: var(--lime); }
+  .tp-logo .pin:nth-child(3) { height: 16px; }
+  .tp-logo .pin:nth-child(4) { height: 10px; background: var(--mint); }
+  header h1 {
+    font-family: 'Cera Pro', 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  header h1 span { color: var(--sky); }
+  .header-tag {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: var(--cosmos-50);
+    text-transform: uppercase;
+  }
+
+  /* ── Left Panel (Selectors) ── */
+  .selectors-panel {
+    grid-row: 2;
+    overflow-y: auto;
+    padding: 14px;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139,195,224,0.15) transparent;
+  }
+  .selectors-panel::-webkit-scrollbar { width: 4px; }
+  .selectors-panel::-webkit-scrollbar-thumb { background: rgba(139,195,224,0.15); border-radius: 2px; }
+
+  .dim-block {
+    margin-bottom: 8px;
+    border: 1px solid rgba(139,195,224,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s;
+    background: rgba(20,38,68,0.4);
+  }
+  .dim-block:hover { border-color: rgba(139,195,224,0.25); }
+  .dim-block.answered {
+    border-color: rgba(205,232,92,0.35);
+    background: rgba(205,232,92,0.03);
+  }
+
+  .dim-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .dim-header:hover { background: rgba(139,195,224,0.04); }
+
+  .dim-header .dim-icon {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: rgba(139,195,224,0.08);
+    border: 1px solid rgba(139,195,224,0.12);
+    flex-shrink: 0;
+  }
+  .dim-block.answered .dim-icon {
+    background: rgba(205,232,92,0.12);
+    border-color: rgba(205,232,92,0.25);
+  }
+
+  .dim-header .dim-label {
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    flex: 1;
+    color: var(--cosmos-10);
+  }
+  .dim-header .dim-level {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--sky);
+    min-width: 18px;
+    text-align: center;
+  }
+  .dim-block.answered .dim-level { color: var(--lime); }
+
+  .dim-header .chevron {
+    font-size: 10px;
+    color: var(--cosmos-50);
+    transition: transform 0.25s;
+  }
+  .dim-block.open .chevron { transform: rotate(180deg); }
+
+  .dim-options {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .dim-block.open .dim-options { max-height: 340px; }
+
+  .opt-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 14px 8px 42px;
+    border: none;
+    background: transparent;
+    color: var(--cosmos-40);
+    font-family: 'Cera Pro', 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    line-height: 1.4;
+  }
+  .opt-btn::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--cosmos-40);
+    transition: all 0.2s;
+  }
+  .opt-btn:hover {
+    color: var(--white);
+    background: rgba(139,195,224,0.05);
+  }
+  .opt-btn.selected {
+    color: var(--lime);
+    background: rgba(205,232,92,0.06);
+    font-weight: 500;
+  }
+  .opt-btn.selected::before {
+    background: var(--lime);
+    border-color: var(--lime);
+    box-shadow: 0 0 8px rgba(205,232,92,0.4);
+  }
+
+  /* ── Center Chart ── */
+  .chart-area {
+    grid-row: 2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 25% 35%, rgba(139,195,224,0.03) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 65%, rgba(205,232,92,0.02) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(20,38,68,0.5) 0%, var(--cosmos-deep) 100%);
+  }
+
+  .chart-container {
+    position: relative;
+    width: min(90%, 580px);
+    aspect-ratio: 1;
+  }
+
+  canvas#maturityChart {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Quadrant labels */
+  .q-label {
+    position: absolute;
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    pointer-events: none;
+    line-height: 1.5;
+  }
+  .q-label.tl { top: 7%; left: 8%; color: var(--dusk); }
+  .q-label.tr { top: 7%; right: 5%; color: var(--lime); text-align: right; }
+  .q-label.bl { bottom: 7%; left: 8%; color: var(--flame); }
+  .q-label.br { bottom: 7%; right: 5%; color: var(--glow); text-align: right; }
+
+  .axis-label {
+    position: absolute;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--cosmos-50);
+    opacity: 0.55;
+  }
+  .axis-label.x-axis { bottom: 1%; left: 50%; transform: translateX(-50%); }
+  .axis-label.y-axis { left: -4px; top: 50%; transform: rotate(-90deg) translateX(-50%); transform-origin: left center; }
+
+  /* Dot */
+  .dot-container {
+    position: absolute;
+    pointer-events: none;
+    transition: left 0.9s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.9s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s;
+    opacity: 0;
+    z-index: 5;
+  }
+  .dot-container.visible { opacity: 1; }
+  .dot-outer {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(205,232,92,0.4), transparent);
+    animation: dotPulse 2.5s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dot-inner {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 20px rgba(205,232,92,0.6), 0 0 50px rgba(205,232,92,0.2);
+    transition: background 0.5s, box-shadow 0.5s;
+  }
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.6); opacity: 0.2; }
+  }
+
+  /* Trail dots (previous positions) */
+  .trail-dot {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--sky);
+    opacity: 0;
+    pointer-events: none;
+    transition: left 0.3s, top 0.3s, opacity 0.5s;
+    z-index: 4;
+  }
+
+  /* Maturity badge */
+  .maturity-badge {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 22px;
+    border-radius: 24px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(20,38,68,0.92);
+    border: 1px solid var(--border);
+    color: var(--cosmos-50);
+    transition: all 0.5s;
+    z-index: 6;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+  }
+  .maturity-badge.active {
+    border-color: var(--lime);
+    color: var(--lime);
+    box-shadow: 0 0 24px rgba(205,232,92,0.15);
+  }
+
+  /* ── Right Panel ── */
+  .insight-panel {
+    grid-row: 2;
+    padding: 16px;
+    background: var(--panel);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139,195,224,0.15) transparent;
+  }
+
+  .score-ring-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .score-ring {
+    position: relative;
+    width: 100px; height: 100px;
+  }
+  .score-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .score-ring .track { fill: none; stroke: rgba(139,195,224,0.08); stroke-width: 6; }
+  .score-ring .fill-ring {
+    fill: none;
+    stroke: url(#ringGrad);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s ease;
+  }
+  .score-value {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .score-value .num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--lime);
+  }
+  .score-value .lbl {
+    font-size: 8px;
+    font-weight: 500;
+    color: var(--cosmos-50);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--cosmos-50);
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-bg {
+    height: 4px;
+    background: rgba(139,195,224,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sky), var(--lime));
+    border-radius: 2px;
+    transition: width 0.5s;
+  }
+  .progress-text {
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--cosmos-40);
+  }
+
+  .gap-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    background: rgba(245,80,105,0.06);
+    border: 1px solid rgba(245,80,105,0.15);
+    border-radius: 8px;
+    margin-bottom: 5px;
+    font-size: 10px;
+    font-weight: 300;
+    color: #fca5a5;
+  }
+  .gap-item .gap-icon { font-size: 10px; color: var(--flame); }
+
+  .dim-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+  }
+  .dim-bar-label {
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--cosmos-50);
+    width: 20px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .dim-bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(139,195,224,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .dim-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s, background 0.5s;
+  }
+  .dim-bar-val {
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--cosmos-50);
+    width: 14px;
+    flex-shrink: 0;
+  }
+
+  .reset-btn {
+    margin-top: auto;
+    padding: 9px;
+    border: 1px solid rgba(245,80,105,0.25);
+    border-radius: 8px;
+    background: rgba(245,80,105,0.06);
+    color: var(--flame);
+    font-family: 'Cera Pro', 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .reset-btn:hover {
+    background: rgba(245,80,105,0.12);
+    border-color: rgba(245,80,105,0.4);
+  }
+
+  /* ── Welcome overlay ── */
+  .welcome-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 8;
+    pointer-events: none;
+    transition: opacity 0.6s;
+  }
+  .welcome-overlay.hidden { opacity: 0; }
+  .welcome-icon-wrap {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(139,195,224,0.2);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    animation: wFloat 3.5s ease-in-out infinite;
+    background: rgba(139,195,224,0.03);
+  }
+  .welcome-icon-wrap svg {
+    width: 28px; height: 28px;
+    stroke: var(--sky);
+    fill: none;
+    stroke-width: 1.5;
+  }
+  @keyframes wFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .welcome-overlay h2 {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cosmos-30);
+    margin-bottom: 6px;
+  }
+  .welcome-overlay p {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--cosmos-50);
+  }
+
+  /* Subtle scanline */
+  .chart-area::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(139,195,224,0.008) 3px,
+      rgba(139,195,224,0.008) 6px
+    );
+    pointer-events: none;
+  }
+</style>
 </head>
 <body>
-  <h1>Salut, moi c’est Calvin 👋</h1>
-  <p>Je suis ton futur assistant intelligent pour t'aider à organiser ta vie, planifier tes tâches et garder le cap.</p>
-  <button class="btn">Découvrir bientôt</button>
 
-  <footer>
-    © 2025 – Calvin.be – Site statique propulsé par GitHub Pages 🚀
-  </footer>
+<header>
+  <div class="header-left">
+    <div class="tp-logo">
+      <div class="pins">
+        <div class="pin"></div><div class="pin"></div><div class="pin"></div><div class="pin"></div>
+      </div>
+    </div>
+    <h1>Clinical Supply <span>AI Maturity</span> Model</h1>
+  </div>
+  <span class="header-tag">Interactive Assessment</span>
+</header>
+
+<!-- Left: Capability Selectors -->
+<div class="selectors-panel" id="selectorsPanel"></div>
+
+<!-- Center: Chart -->
+<div class="chart-area">
+  <div class="maturity-badge" id="maturityBadge">Awaiting Input</div>
+
+  <div class="chart-container" id="chartContainer">
+    <canvas id="maturityChart"></canvas>
+    <div class="q-label tl">Prescriptive<br/>& Structured</div>
+    <div class="q-label tr">Adaptive<br/>& Intelligent</div>
+    <div class="q-label bl">Reactive<br/>& Manual</div>
+    <div class="q-label br">Managed<br/>& Responsive</div>
+    <div class="axis-label x-axis">Planning Sophistication &#8594;</div>
+    <div class="axis-label y-axis">Execution & Responsiveness &#8594;</div>
+
+    <!-- Trail dots for motion history -->
+    <div class="trail-dot" id="trail0"></div>
+    <div class="trail-dot" id="trail1"></div>
+    <div class="trail-dot" id="trail2"></div>
+
+    <div class="dot-container" id="dotContainer">
+      <div class="dot-outer"><div class="dot-inner"></div></div>
+    </div>
+
+    <div class="welcome-overlay" id="welcomeOverlay">
+      <div class="welcome-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <h2>Begin Assessment</h2>
+      <p>Select capabilities on the left panel</p>
+    </div>
+  </div>
+</div>
+
+<!-- Right: Insights -->
+<div class="insight-panel">
+  <div class="score-ring-wrap">
+    <div class="score-ring">
+      <svg viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8BC3E0"/>
+            <stop offset="100%" stop-color="#CDE85C"/>
+          </linearGradient>
+        </defs>
+        <circle class="track" cx="60" cy="60" r="50"/>
+        <circle class="fill-ring" id="scoreRing" cx="60" cy="60" r="50"
+          stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+      </svg>
+      <div class="score-value">
+        <span class="num" id="scoreNum">&mdash;</span>
+        <span class="lbl">Score</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title">Assessment Progress</div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-text"><span id="answeredCount">0</span> / 8 dimensions</div>
+  </div>
+
+  <div>
+    <div class="section-title">Dimension Scores</div>
+    <div id="dimBarsContainer"></div>
+  </div>
+
+  <div>
+    <div class="section-title">Top Capability Gaps</div>
+    <div id="gapsContainer">
+      <div style="font-size:10px;color:var(--cosmos-50);opacity:0.5;padding:8px 0;">No data yet</div>
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">&#10227; Reset Assessment</button>
+</div>
+
+<script>
+// ── Tenthpin Color Palette ──
+const TP = {
+  cosmos: '#142644',
+  sky: '#8BC3E0',
+  lime: '#CDE85C',
+  mint: '#78FAAA',
+  flame: '#F55069',
+  glow: '#FF8755',
+  graphite: '#A0AAB4',
+  dusk: '#7D5FEB',
+  moss: '#00AF87',
+  white: '#FFFFFF',
+  c50: '#8A93A2',
+  c30: '#B9BEC7',
+  c10: '#E8E9EC'
+};
+
+// ── Data Model ──
+const dimensions = [
+  {
+    id: 'A', label: 'Demand & Enrollment Forecasting', icon: '&#xe901;', iconText: 'A', weight: 2.0,
+    axis: 'x',
+    options: [
+      'Manual / Excel-based forecasting',
+      'Rule-based forecasting (buffers, fixed assumptions)',
+      'Statistical forecasting (time series)',
+      'ML-based predictive enrollment forecasting',
+      'AI-driven scenario-based forecasting (probabilistic)'
+    ]
+  },
+  {
+    id: 'B', label: 'Inventory Strategy & Control', iconText: 'B', weight: 1.5,
+    axis: 'y',
+    options: [
+      'Static min/max levels',
+      'Country-level pooling',
+      'Regional pooling & redistribution',
+      'Dynamic inventory optimization',
+      'AI-driven expiry-aware inventory positioning'
+    ]
+  },
+  {
+    id: 'C', label: 'Supply Planning & Replenishment', iconText: 'C', weight: 1.5,
+    axis: 'x',
+    options: [
+      'Fixed resupply cycles',
+      'Planner-triggered resupply',
+      'Event-driven resupply (enrollment, visits)',
+      'Predictive resupply recommendations',
+      'Prescriptive AI resupply actions'
+    ]
+  },
+  {
+    id: 'D', label: 'Scenario Simulation & Risk Mgmt', iconText: 'D', weight: 1.0,
+    axis: 'y',
+    options: [
+      'No scenario simulation',
+      'Manual what-if scenarios',
+      'Deterministic scenarios (best / worst case)',
+      'Probabilistic risk modeling',
+      'AI-driven continuous risk simulation'
+    ]
+  },
+  {
+    id: 'E', label: 'Data Integration Landscape', iconText: 'E', weight: 2.0,
+    axis: 'x',
+    options: [
+      'Siloed systems (ERP, IRT separate)',
+      'Periodic data synchronization',
+      'Near real-time integration',
+      'Unified data layer',
+      'AI-ready data foundation (clean, harmonized, historical)'
+    ]
+  },
+  {
+    id: 'F', label: 'Decision-Making Model', iconText: 'F', weight: 1.0,
+    axis: 'y',
+    options: [
+      'Human-only decisions',
+      'System alerts, human decides',
+      'System recommendations, human approves',
+      'AI recommends ranked actions',
+      'AI executes within guardrails'
+    ]
+  },
+  {
+    id: 'G', label: 'Explainability & Governance', iconText: 'G', weight: 1.0,
+    axis: 'both',
+    options: [
+      'No AI governance',
+      'Basic validation rules',
+      'Explainable AI outputs',
+      'Audit trails & model monitoring',
+      'Regulatory-ready AI governance'
+    ]
+  },
+  {
+    id: 'H', label: 'Organizational Readiness', iconText: 'H', weight: 1.0,
+    axis: 'both',
+    options: [
+      'Ad-hoc initiatives',
+      'Isolated pilots',
+      'Dedicated AI supply team',
+      'Center of Excellence',
+      'Embedded AI in operating model'
+    ]
+  }
+];
+
+const maturityLevels = [
+  { name: 'Reactive', desc: 'Manual, hindsight-driven', color: TP.flame, min: 0 },
+  { name: 'Managed', desc: 'Rule-based control', color: TP.glow, min: 25 },
+  { name: 'Predictive', desc: 'Forecast-driven planning', color: TP.sky, min: 45 },
+  { name: 'Prescriptive', desc: 'AI-guided decisions', color: TP.dusk, min: 65 },
+  { name: 'Adaptive', desc: 'Continuous learning & optimization', color: TP.lime, min: 85 }
+];
+
+let selections = {};
+let openDim = null;
+let trailHistory = [];
+
+// ── Build Selectors Panel ──
+function buildSelectors() {
+  const panel = document.getElementById('selectorsPanel');
+  panel.innerHTML = '';
+  dimensions.forEach((dim) => {
+    const block = document.createElement('div');
+    const isAnswered = selections[dim.id] !== undefined;
+    const isOpen = openDim === dim.id;
+    block.className = 'dim-block' + (isAnswered ? ' answered' : '') + (isOpen ? ' open' : '');
+    block.id = 'dimBlock_' + dim.id;
+
+    const header = document.createElement('div');
+    header.className = 'dim-header';
+    header.innerHTML = `
+      <div class="dim-icon">${dim.iconText}</div>
+      <div class="dim-label">${dim.label}</div>
+      <div class="dim-level">${isAnswered ? selections[dim.id] + 1 : '—'}</div>
+      <div class="chevron">▾</div>
+    `;
+    header.onclick = () => {
+      openDim = openDim === dim.id ? null : dim.id;
+      buildSelectors();
+    };
+
+    const opts = document.createElement('div');
+    opts.className = 'dim-options';
+    dim.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn' + (selections[dim.id] === oi ? ' selected' : '');
+      btn.textContent = (oi + 1) + '. ' + opt;
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        selections[dim.id] = oi;
+        const nextUnanswered = dimensions.find(d => selections[d.id] === undefined && d.id !== dim.id);
+        openDim = nextUnanswered ? nextUnanswered.id : null;
+        buildSelectors();
+        updateChart();
+      };
+      opts.appendChild(btn);
+    });
+
+    block.appendChild(header);
+    block.appendChild(opts);
+    panel.appendChild(block);
+  });
+}
+
+// ── Scoring ──
+function computeScores() {
+  const answered = dimensions.filter(d => selections[d.id] !== undefined);
+  if (answered.length === 0) return { total: 0, x: 0, y: 0, answered: 0, gaps: [] };
+
+  let totalWeighted = 0, totalWeight = 0;
+  let xWeighted = 0, xWeight = 0;
+  let yWeighted = 0, yWeight = 0;
+
+  dimensions.forEach(d => {
+    if (selections[d.id] === undefined) return;
+    const val = selections[d.id] / 4;
+    totalWeighted += val * d.weight;
+    totalWeight += d.weight;
+    if (d.axis === 'x' || d.axis === 'both') { xWeighted += val * d.weight; xWeight += d.weight; }
+    if (d.axis === 'y' || d.axis === 'both') { yWeighted += val * d.weight; yWeight += d.weight; }
+  });
+
+  const total = totalWeight > 0 ? (totalWeighted / totalWeight) * 100 : 0;
+  const x = xWeight > 0 ? (xWeighted / xWeight) * 100 : 0;
+  const y = yWeight > 0 ? (yWeighted / yWeight) * 100 : 0;
+
+  const gaps = dimensions
+    .filter(d => selections[d.id] !== undefined)
+    .map(d => ({ ...d, score: selections[d.id] }))
+    .sort((a, b) => a.score - b.score)
+    .slice(0, 2)
+    .filter(g => g.score < 3);
+
+  return { total, x, y, answered: answered.length, gaps };
+}
+
+function getMaturityLevel(score) {
+  for (let i = maturityLevels.length - 1; i >= 0; i--) {
+    if (score >= maturityLevels[i].min) return maturityLevels[i];
+  }
+  return maturityLevels[0];
+}
+
+// ── Canvas Chart Drawing ──
+const canvas = document.getElementById('maturityChart');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  const container = document.getElementById('chartContainer');
+  const size = container.offsetWidth;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = size * dpr;
+  canvas.height = size * dpr;
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function drawChart() {
+  resizeCanvas();
+  const w = canvas.width / (window.devicePixelRatio || 1);
+  const h = canvas.height / (window.devicePixelRatio || 1);
+  const pad = 38;
+  const cw = w - pad * 2;
+  const ch = h - pad * 2;
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Quadrant fills using Tenthpin palette
+  const qFills = [
+    { x: 0, y: 0, c: 'rgba(125,95,235,0.04)' },    // top-left: dusk
+    { x: 1, y: 0, c: 'rgba(205,232,92,0.05)' },     // top-right: lime
+    { x: 0, y: 1, c: 'rgba(245,80,105,0.04)' },     // bottom-left: flame
+    { x: 1, y: 1, c: 'rgba(255,135,85,0.04)' }      // bottom-right: glow
+  ];
+  qFills.forEach(q => {
+    ctx.fillStyle = q.c;
+    ctx.fillRect(pad + q.x * cw / 2, pad + q.y * ch / 2, cw / 2, ch / 2);
+  });
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(139,195,224,0.06)';
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 10; i++) {
+    const gx = pad + (cw * i / 10);
+    const gy = pad + (ch * i / 10);
+    ctx.beginPath(); ctx.moveTo(gx, pad); ctx.lineTo(gx, pad + ch); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad, gy); ctx.lineTo(pad + cw, gy); ctx.stroke();
+  }
+
+  // Center cross (Tenthpin sky blue)
+  ctx.strokeStyle = 'rgba(139,195,224,0.18)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([5, 5]);
+  ctx.beginPath(); ctx.moveTo(pad + cw / 2, pad); ctx.lineTo(pad + cw / 2, pad + ch); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad, pad + ch / 2); ctx.lineTo(pad + cw, pad + ch / 2); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Maturity zone diagonals
+  ctx.strokeStyle = 'rgba(139,195,224,0.04)';
+  ctx.lineWidth = 1;
+  [0.25, 0.45, 0.65, 0.85].forEach(t => {
+    const norm = t;
+    ctx.beginPath();
+    ctx.moveTo(pad, pad + ch * (1 - Math.min(norm * 2, 1)));
+    ctx.lineTo(pad + cw * Math.min(norm * 2, 1), pad + ch);
+    ctx.stroke();
+  });
+
+  // Maturity zone labels along diagonal
+  const zoneLabels = [
+    { name: 'Reactive', pos: 0.12, color: TP.flame },
+    { name: 'Managed', pos: 0.3, color: TP.glow },
+    { name: 'Predictive', pos: 0.5, color: TP.sky },
+    { name: 'Prescriptive', pos: 0.72, color: TP.dusk },
+    { name: 'Adaptive', pos: 0.9, color: TP.lime }
+  ];
+  ctx.font = '500 8px "Cera Pro", "DM Sans", sans-serif';
+  zoneLabels.forEach(z => {
+    ctx.fillStyle = z.color + '35';
+    const zx = pad + cw * z.pos;
+    const zy = pad + ch * (1 - z.pos);
+    ctx.save();
+    ctx.translate(zx, zy);
+    ctx.rotate(-Math.PI / 4);
+    ctx.textAlign = 'center';
+    ctx.fillText(z.name.toUpperCase(), 0, 0);
+    ctx.restore();
+  });
+
+  // Tick labels
+  ctx.fillStyle = TP.c50 + '80';
+  ctx.font = '300 8px "Cera Pro", "DM Sans", sans-serif';
+  ctx.textAlign = 'center';
+  for (let i = 0; i <= 4; i++) {
+    const v = i * 25;
+    ctx.fillText(v, pad + (cw * v / 100), pad + ch + 16);
+  }
+  ctx.textAlign = 'right';
+  for (let i = 0; i <= 4; i++) {
+    const v = i * 25;
+    ctx.fillText(v, pad - 10, pad + ch - (ch * v / 100) + 3);
+  }
+
+  // Border
+  ctx.strokeStyle = 'rgba(139,195,224,0.15)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(pad, pad, cw, ch);
+
+  // Corner accents (Tenthpin Sky)
+  const cLen = 12;
+  ctx.strokeStyle = TP.sky + '60';
+  ctx.lineWidth = 2;
+  [[pad, pad, 1, 1], [pad + cw, pad, -1, 1], [pad, pad + ch, 1, -1], [pad + cw, pad + ch, -1, -1]].forEach(([cx, cy, dx, dy]) => {
+    ctx.beginPath();
+    ctx.moveTo(cx + cLen * dx, cy);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx, cy + cLen * dy);
+    ctx.stroke();
+  });
+}
+
+// ── Update Everything ──
+function updateChart() {
+  const scores = computeScores();
+  const level = getMaturityLevel(scores.total);
+
+  // Welcome overlay
+  document.getElementById('welcomeOverlay').classList.toggle('hidden', scores.answered > 0);
+
+  // Dot position
+  const dot = document.getElementById('dotContainer');
+  const container = document.getElementById('chartContainer');
+  const w = container.offsetWidth;
+  const pad = 38;
+  const cw = w - pad * 2;
+
+  if (scores.answered > 0) {
+    // Save trail
+    const newX = pad + (scores.x / 100) * cw - 18;
+    const newY = pad + (1 - scores.y / 100) * cw - 18;
+
+    if (dot.classList.contains('visible')) {
+      trailHistory.push({ x: parseFloat(dot.style.left) + 15, y: parseFloat(dot.style.top) + 15 });
+      if (trailHistory.length > 3) trailHistory.shift();
+      trailHistory.forEach((t, i) => {
+        const el = document.getElementById('trail' + i);
+        el.style.left = t.x + 'px';
+        el.style.top = t.y + 'px';
+        el.style.opacity = 0.15 + (i * 0.08);
+      });
+    }
+
+    dot.classList.add('visible');
+    dot.style.left = newX + 'px';
+    dot.style.top = newY + 'px';
+
+    // Color dot based on maturity level
+    const inner = dot.querySelector('.dot-inner');
+    inner.style.background = level.color;
+    inner.style.boxShadow = `0 0 20px ${level.color}, 0 0 50px ${level.color}30`;
+    dot.querySelector('.dot-outer').style.background = `radial-gradient(circle, ${level.color}50, transparent)`;
+  } else {
+    dot.classList.remove('visible');
+    trailHistory = [];
+    [0,1,2].forEach(i => { document.getElementById('trail'+i).style.opacity = 0; });
+  }
+
+  // Badge
+  const badge = document.getElementById('maturityBadge');
+  if (scores.answered > 0) {
+    badge.textContent = level.name + ' — ' + level.desc;
+    badge.classList.add('active');
+    badge.style.borderColor = level.color;
+    badge.style.color = level.color;
+    badge.style.boxShadow = '0 0 24px ' + level.color + '20';
+  } else {
+    badge.textContent = 'Awaiting Input';
+    badge.classList.remove('active');
+    badge.style.borderColor = '';
+    badge.style.color = '';
+    badge.style.boxShadow = '';
+  }
+
+  // Score ring
+  const ring = document.getElementById('scoreRing');
+  const circ = 314.16;
+  ring.style.strokeDashoffset = circ - (circ * scores.total / 100);
+  const numEl = document.getElementById('scoreNum');
+  numEl.textContent = scores.answered > 0 ? Math.round(scores.total) : '—';
+  numEl.style.color = scores.answered > 0 ? level.color : '';
+
+  // Progress
+  document.getElementById('progressFill').style.width = (scores.answered / 8 * 100) + '%';
+  document.getElementById('answeredCount').textContent = scores.answered;
+
+  // Dimension bars
+  const barsContainer = document.getElementById('dimBarsContainer');
+  barsContainer.innerHTML = '';
+  dimensions.forEach(d => {
+    const val = selections[d.id] !== undefined ? selections[d.id] + 1 : 0;
+    const pct = val / 5 * 100;
+    const barColor = val === 0 ? 'rgba(139,195,224,0.1)' :
+      val <= 1 ? TP.flame : val <= 2 ? TP.glow : val <= 3 ? TP.sky : val <= 4 ? TP.dusk : TP.lime;
+    const row = document.createElement('div');
+    row.className = 'dim-bar-row';
+    row.innerHTML = `
+      <span class="dim-bar-label">${d.id}</span>
+      <div class="dim-bar-track"><div class="dim-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+      <span class="dim-bar-val" style="color:${val ? barColor : ''}">${val || '—'}</span>
+    `;
+    barsContainer.appendChild(row);
+  });
+
+  // Gaps
+  const gc = document.getElementById('gapsContainer');
+  if (scores.gaps.length > 0) {
+    gc.innerHTML = '';
+    scores.gaps.forEach(g => {
+      const el = document.createElement('div');
+      el.className = 'gap-item';
+      el.innerHTML = '<span class="gap-icon">&#9651;</span> ' + g.label;
+      gc.appendChild(el);
+    });
+  } else if (scores.answered > 0) {
+    gc.innerHTML = '<div style="font-size:10px;color:' + TP.lime + ';padding:8px 0;">&#10003; No critical gaps detected</div>';
+  } else {
+    gc.innerHTML = '<div style="font-size:10px;color:var(--cosmos-50);opacity:0.5;padding:8px 0;">No data yet</div>';
+  }
+
+  drawChart();
+}
+
+function resetAll() {
+  selections = {};
+  openDim = null;
+  trailHistory = [];
+  buildSelectors();
+  updateChart();
+  // Re-open first dimension
+  openDim = 'A';
+  buildSelectors();
+}
+
+// ── Init ──
+window.addEventListener('resize', () => { drawChart(); updateChart(); });
+buildSelectors();
+drawChart();
+updateChart();
+openDim = 'A';
+buildSelectors();
+</script>
 </body>
 </html>
